@@ -26,6 +26,7 @@ resource "aws_subnet" "misubnet" {
 
 resource "aws_security_group" "gs_migrupo" {
   name = "mi_gs"
+  vpc_id = aws_vpc.mi_vpc.id
 
   ingress {
       cidr_blocks = ["0.0.0.0/0"]
