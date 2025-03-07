@@ -40,6 +40,17 @@ resource "aws_instance" "example" {
   ami = "ami-0e2c8caa4b6378d8c"
   instance_type = "t3.micro"
   key_name = "vockey"
+  user_data = <<-EOF
+      #!/bin/bash
+      yum update -y
+      yum install -y httpd
+      systemctl enable httpd
+      systemctl start httpd
+      echo "<html><body><h1>¡Hola, mundo! Esto es una página de prueba.</h1><p>Instancia EC2 con Amazon Linux y Apache.</p></body></html> > /var/www/html/index.html
+      chmod 644 /var/www/html/index.html
+      systemctl restart httpd
+      EOF
+
 
   tags = {
     Name = "EC2Instance"
