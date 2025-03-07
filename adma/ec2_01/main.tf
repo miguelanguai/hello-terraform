@@ -27,12 +27,12 @@ resource "aws_subnet" "name" {
 resource "aws_security_group" "gs_migrupo" {
   name = "mi_gs"
 
-  ingress = {
-    cidr_block = ["0.0.0.0/0"]
-    description = "Acceso al puerto 80 desde el exterior"
-    from_port = 80
-    to_port = 80
-    protocol = "TCP"
+  ingress {
+      cidr_blocks = ["0.0.0.0/0"]
+      description = "Acceso al puerto 80 desde el exterior"
+      from_port = 80
+      to_port = 80
+      protocol = "TCP"
   }
 }
 
