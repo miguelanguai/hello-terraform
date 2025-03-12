@@ -35,14 +35,49 @@ resource "aws_security_group" "gs_migrupo" {
       to_port = 80
       protocol = "TCP"
   }
+
+  egress {
+      cidr_blocks = ["0.0.0.0/0"]
+      description = "Acceso al puerto 80 desde el exterior"
+      from_port = 0
+      to_port = 0
+      protocol = "-1"
+  }
+}
+
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.mi_vpc.id
+
+  tags = {
+    Name = "main"
+  }
+}
+
+resource "aws_route_table" "rt" {
+  vpc_id = aws_vpc.mi_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  tags = {
+    Name = "route-table"
+  }
+}
+
+resource "aws_route_table_association" "rt-association" {
+  subnet_id      = aws_subnet.misubnet.id
+  route_table_id = aws_route_table.rt.id
 }
 
 resource "aws_instance" "miec2" {
-  ami = "ami-0e2c8caa4b6378d8c"
+  ami = "ami-08b5b3a93ed654d19"
   instance_type = "t3.micro"
   subnet_id = aws_subnet.misubnet.id
   vpc_security_group_ids = [aws_security_group.gs_migrupo.id]
   key_name = "vockey"
+  associate_public_ip_address = true
   user_data = <<-EOF
       #!/bin/bash
       yum update -y
