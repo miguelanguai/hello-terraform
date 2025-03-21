@@ -59,3 +59,7 @@ En Terraform, todos los archivos .tf en el mismo directorio se combinan automát
 2. 02_sin_tfvars: creación de un ec2 con subred pública sin archivo tfvars (variables comunes)
 3. 02_con_tfvars: creación de un ec2 con subred pública con archivo tfvars (variables comunes)
 4. 03_ejemplo: ec2c, subred publica, privada e internet gateway.
+
+## Conexión con Azure
+
+Seguir este enlace: https://learn.microsoft.com/en-us/azure/developer/terraform/authenticate-to-azure?tabs=bash
